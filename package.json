@@ -1,0 +1,92 @@
+{
+  "name": "electronic-radio-app",
+  "version": "1.0.0",
+  "description": "Full-featured Internet Radio App with 200+ Electronic Music Stations",
+  "main": "src/electron/main.js",
+  "homepage": "./",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.0",
+    "electron": "^27.0.0",
+    "electron-squirrel-startup": "^1.1.2",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "shoutcast-api": "^1.0.0",
+    "react-icons": "^4.12.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "zustand": "^4.4.2",
+    "react-router-dom": "^6.18.0",
+    "framer-motion": "^10.16.4",
+    "wavesurfer.js": "^6.6.0",
+    "node-id3": "^0.2.3"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1",
+    "electron-builder": "^24.6.4",
+    "tailwindcss": "^3.3.5",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.16"
+  },
+  "scripts": {
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-build": "npm run react-build && electron-builder",
+    "start": "node src/server.js",
+    "dev": "npm run electron-dev"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "production": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "appId": "com.electronic-radio.app",
+    "productName": "Electronic Radio",
+    "files": [
+      "build/**/*",
+      "src/electron/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}
