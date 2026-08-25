@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaPlay, FaHeart, FaRegHeart, FaMusic } from 'react-icons/fa';
 import { usePlayerStore } from '../stores/playerStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
+import { motion } from 'framer-motion';
 
 const StationCard = ({ station }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -24,39 +25,43 @@ const StationCard = ({ station }) => {
   };
 
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.02 }}
       onClick={() => setCurrentStation(station)}
-      className={`p-4 rounded-lg cursor-pointer transition transform hover:scale-105 ${
+      className={`p-4 rounded-lg cursor-pointer transition ${
         isPlaying
           ? 'bg-gradient-to-br from-pink-500 to-purple-600 shadow-2xl'
           : 'bg-gray-800 hover:bg-gray-700 border border-gray-700'
       }`}
     >
       <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <FaMusic className={isPlaying ? 'text-white animate-bounce' : 'text-gray-400'} />
-            <h3 className="font-bold text-white truncate">{station.name}</h3>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-2">
+            <FaMusic className={isPlaying ? 'text-white animate-bounce' : 'text-gray-400'} size={14} />
+            <h3 className="font-bold text-white truncate text-sm sm:text-base">{station.name}</h3>
           </div>
-          <p className="text-sm text-gray-300 mt-1">{station.country}</p>
+          <p className="text-xs sm:text-sm text-gray-300">{station.country}</p>
           <p className="text-xs text-gray-400 mt-1">{station.genre}</p>
           <p className={`text-xs mt-2 ${
             station.quality === 'High' ? 'text-green-400' : 'text-yellow-400'
           }`}>
-            Quality: {station.quality} • Bitrate: {station.bitrate}
+            {station.quality} • {station.bitrate} • {station.listeners?.toLocaleString()} listeners
           </p>
         </div>
         <div className="flex flex-col gap-2 ml-2">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={(e) => {
               e.stopPropagation();
               setCurrentStation(station);
             }}
             className="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full transition"
           >
-            <FaPlay size={14} />
-          </button>
-          <button
+            <FaPlay size={12} />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.2 }}
             onClick={handleFavorite}
             className="text-xl transition"
           >
@@ -65,10 +70,10 @@ const StationCard = ({ station }) => {
             ) : (
               <FaRegHeart className="text-gray-400 hover:text-red-500" />
             )}
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -76,9 +81,12 @@ const StationList = ({ stations, loading }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-96">
-        <div className="animate-spin">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
           <FaMusic className="text-4xl text-pink-500" />
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -93,11 +101,22 @@ const StationList = ({ stations, loading }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {stations.map((station) => (
-        <StationCard key={station.id} station={station} />
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+    >
+      {stations.map((station, index) => (
+        <motion.div
+          key={station.id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.05 }}
+        >
+          <StationCard station={station} />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
