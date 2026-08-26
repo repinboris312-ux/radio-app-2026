@@ -26,6 +26,9 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Remove Electron-only dependency
+        run: npm pkg delete devDependencies.electron-squirrel-startup dependencies.electron-squirrel-startup
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
