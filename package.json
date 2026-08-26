@@ -27,7 +27,7 @@
     "react-scripts": "5.0.1",
     "electron-builder": "^24.6.4",
     "tailwindcss": "^3.3.5",
-    "postcss": "^8.8.31",
+    "postcss": "^8.5.26",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.1",
     "wait-on": "^7.0.1"
