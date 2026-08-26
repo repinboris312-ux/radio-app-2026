@@ -36,7 +36,7 @@ jobs:
         run: npm install @capacitor/core@5 @capacitor/cli@5 @capacitor/android@5
 
       - name: Build React app
-        run: npm run react-build
+        run: CI=false npm run react-build
 
       - name: Create Capacitor config
         run: |
